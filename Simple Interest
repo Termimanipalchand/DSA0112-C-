@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+double calculateSimpleInterest(double principal, double rate, double time ) {
+    return (principal * rate * time) / 100;
+}
+void getCustomerDetails(double &principal, double &time, char &isSeniorCitizen) {
+    cout << "Enter the principal amount: ";
+    cin >> principal;
+    cout << "Enter the no of years: ";
+    cin >> time;
+    cout << "Is customer senior citizen (y/n): ";
+    cin >> isSeniorCitizen;
+}
+int main() {
+    double principal,value,time;
+    char isSeniorCitizen;
+    getCustomerDetails(principal, time, isSeniorCitizen);
+    double rate;
+    if (cin.fail() || value < 0) {
+            cout << "\nInvalid input. Please enter a valid positive number." << endl;
+        }
+    else if (isSeniorCitizen == 'y' || isSeniorCitizen == 'Y') {
+        rate = 12; 
+    } else {
+        rate = 10; 
+    }
+    double interest = calculateSimpleInterest(principal, rate, time);
+    cout << "Interest: " << interest << endl;
+    return 0;
+}
