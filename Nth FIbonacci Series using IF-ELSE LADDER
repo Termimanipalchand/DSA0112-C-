@@ -1,0 +1,26 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+	int n1=1,n2=1,n3,i,num;
+	cout <<"Enter the number:";
+	cin >>num;
+	cout <<n1<<"\n"<<n2<<"\n";
+	if(num==0)
+	{
+		cout << "The " << num << "st Fibonacci number is: 0" ;
+	}
+	else if (num == 2) {
+        cout << "The " << num << "nd Fibonacci number is: 1" ;
+    } 
+    else {
+	for(i=2;i<num;i++)
+	{
+		n3=n1+n2;
+		cout <<n3<<" "<<"\n";
+		n1=n2;
+		n2=n3;
+	}
+}
+	return 0;
+}
