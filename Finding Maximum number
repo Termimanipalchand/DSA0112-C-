@@ -1,0 +1,31 @@
+#include <iostream>
+using namespace std;
+class Largest {
+private:
+    int a, b;
+public:
+    void setdata(int x, int y) {
+        a = x;
+        b = y;
+    }
+    friend void find_Max(Largest l);
+};
+void find_Max(Largest l) {
+    if (l.a > l.b)
+        cout << "Maximum number is " << l.a << endl;
+    else if (l.b > l.a)
+        cout << "Maximum number is " << l.b << endl;
+    else
+        cout << "Both numbers are equal." << endl;
+}
+int main() {
+    Largest obj;
+    int num1, num2;
+    cout << "Enter the first number: ";
+    cin >> num1;
+    cout << "Enter the second number: ";
+    cin >> num2;
+    obj.setdata(num1, num2);
+    find_Max(obj);
+    return 0;
+}
