@@ -1,0 +1,43 @@
+#include <iostream>
+using namespace std;
+class Series {
+private:
+    int limit;
+public:
+    void input() {
+        cout << "Enter the limit: ";
+        cin >> limit;
+        if (cin.fail() || limit < 0) {
+            cout << "Invalid input. Please enter a positive integer." << endl;
+            cin.clear();
+            return;
+        }
+    }
+    void show() {
+        if (limit < 0) {
+            cout << "Fibonacci series cannot be generated for negative numbers." << endl;
+            return;
+        }
+        int a = 0, b = 1, next;
+        if (limit == 0) {
+            return;
+        }
+        cout << a;
+        if (limit > 1) {
+            cout << " " << b;
+        }
+        for (int i = 3; i <= limit; i++) {
+            next = a + b;
+            cout << " " << next;
+            a = b;
+            b = next;
+        }
+        cout << endl;
+    }
+};
+int main() {
+    Series fibSeries;
+    fibSeries.input();
+    fibSeries.show();
+    return 0;
+}
