@@ -1,0 +1,40 @@
+#include <iostream>
+#include <limits>
+using namespace std;
+int add(int a, int b) {
+    return a + b;
+}
+int add(int a, int b, int c) {
+    return a + b + c;
+}
+bool isValidInput() {
+    if (cin.fail()) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+        return false;
+    }
+    return true;
+}
+int main() {
+    int a, b, c;
+    cout << "Enter the values for a, b, c: ";
+    cin >> a;
+    if (!isValidInput()) {
+        cout << "Invalid input for 'a'. Please enter integers only." << endl;
+        return 1;
+    }
+    cin >> b;
+    if (!isValidInput()) {
+        cout << "Invalid input for 'b'. Please enter integers only." << endl;
+        return 1;
+    }
+    cin >> c;
+    if (!isValidInput()) {
+        cout << "Invalid input for 'c'. Please enter integers only." << endl;
+        return 1;
+    }
+    cout << "The value of addition using two parameters is: " << add(a, b) << endl;
+    cout << "The value of addition using three parameters is: " << add(a, b, c) << endl;
+
+    return 0;
+}
