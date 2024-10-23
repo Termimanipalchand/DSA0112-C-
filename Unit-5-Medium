@@ -1,0 +1,333 @@
+1.
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class AddAmount {
+protected:
+    double amount;
+
+public:
+    AddAmount() : amount(50) {}
+
+    void displayAmount() {
+        cout << "Total Amount is = " << amount << endl;
+    }
+};
+
+class AddMoney : public AddAmount {
+public:
+    AddMoney(double additionalAmount) {
+        amount += additionalAmount;
+    }
+};
+
+int main() {
+    string input;
+    double additionalAmount;
+
+    cout << "Enter the amount: ";
+    cin >> input;
+
+    try {
+        additionalAmount = stod(input);
+        AddMoney piggieBank(additionalAmount);
+        piggieBank.displayAmount();
+    } catch (exception& e) {
+        cout << "Invalid input" << endl;
+    }
+
+    return 0;
+}
+
+2.
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Person {
+protected:
+    double salary;
+
+public:
+    virtual void getdata() {
+        cout << "Enter the salary: ";
+        while (!(cin >> salary) || salary < 0) {
+            cin.clear();
+            cin.ignore(10000, '\n');
+            cout << "Invalid input, please enter a valid salary: ";
+        }
+    }
+
+    virtual void displaydata() {
+        cout << "Salary: " << salary << endl;
+    }
+
+    virtual double calculateBonus() {
+        return salary * 1.02;
+    }
+};
+
+class Admin : virtual public Person {  // Use virtual inheritance
+public:
+    void getdata() override {
+        Person::getdata();
+    }
+
+    void displaydata() override {
+        Person::displaydata();
+    }
+
+    double calculateBonus() override {
+        return salary * 1.03;
+    }
+};
+
+class Account : virtual public Person {  
+public:
+    void getdata() override {
+        Person::getdata();
+    }
+
+    void displaydata() override {
+        Person::displaydata();
+    }
+
+    double calculateBonus() override {
+        return salary * 1.05;
+    }
+};
+
+class Master : public Admin, public Account {
+public:
+    void getdata() override {
+        Admin::getdata(); 
+    }
+
+    void displaydata() override {
+        Admin::displaydata();  
+    }
+
+    double calculateBonus() override {
+        return Admin::calculateBonus();  
+    }
+};
+
+int main() {
+    Person* employee;
+    Master master;
+
+    employee = &master;
+    employee->getdata();
+    employee->displaydata();
+    cout << "Bonus = " << employee->calculateBonus() << endl;
+
+    return 0;
+}
+
+3.
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Employee {
+protected:
+    string emp_name;
+    string emp_id;
+    double basic_salary;
+
+public:
+    Employee(string name, string id, double salary) : emp_name(name), emp_id(id), basic_salary(salary) {}
+};
+
+class Payroll : public Employee {
+    double gross_salary;
+    double deduction;
+    double net_salary;
+
+public:
+    Payroll(string name, string id, double salary) : Employee(name, id, salary) {
+        gross_salary = basic_salary + (basic_salary * 0.7); 
+        deduction = 50000;  R
+        net_salary = gross_salary - deduction;
+    }
+
+    void displaySalaryDetails() {
+        cout << "Gross salary : " << gross_salary << endl;
+        cout << "Ded : " << deduction << endl;
+        cout << "Net salary = " << net_salary << endl;
+    }
+};
+
+int main() {
+    string name, id;
+    double salary;
+    
+    cout << "Enter employee name : ";
+    cin >> name;
+    
+    cout << "Enter Employee id : ";
+    cin >> id;
+    
+    cout << "Enter Employee Salary : ";
+    cin >> salary;
+
+    Payroll employee(name, id, salary);
+    employee.displaySalaryDetails();
+
+    return 0;
+}
+
+4.
+#include <iostream>
+using namespace std;
+
+class Shape {
+public:
+    virtual void calculateArea() = 0;  
+};
+
+class Rectangle : public Shape {
+protected:
+    double length, breadth;
+
+public:
+    Rectangle(double l, double b) : length(l), breadth(b) {}
+
+    void calculateArea() override {
+        if (length <= 0 || breadth <= 0) {
+            cout << "Invalid dimensions for a rectangle." << endl;
+        } else {
+            double area = length * breadth;
+            cout << "Area of rectangle: " << area << endl;
+        }
+    }
+};
+
+class Cuboid : public Rectangle {
+private:
+    double height;
+
+public:
+    Cuboid(double l, double b, double h) : Rectangle(l, b), height(h) {}
+
+    void calculateVolume() {
+        if (length <= 0 || breadth <= 0 || height <= 0) {
+            cout << "Invalid dimensions for a cuboid." << endl;
+        } else {
+            double volume = length * breadth * height;
+            cout << "Volume of cuboid: " << volume << endl;
+        }
+    }
+};
+
+int main() {
+    double length, breadth;
+
+    cout << "Enter length: ";
+    if (!(cin >> length)) {
+        cout << "Invalid input for length." << endl;
+        return 1;
+    }
+
+    cout << "Enter breadth: ";
+    if (!(cin >> breadth)) {
+        cout << "Invalid input for breadth." << endl;
+        return 1;
+    }
+
+    if (length <= 0 || breadth <= 0) {
+        cout << "Invalid dimensions for a rectangle." << endl;
+        return 1;
+    }
+
+    Rectangle rect(length, breadth);
+    rect.calculateArea();
+
+    double height = 10; 
+    Cuboid cub(length, breadth, height);
+    cub.calculateVolume();
+
+    return 0;
+}
+
+5.
+#include <iostream>
+using namespace std;
+
+class Bank {
+public:
+    virtual float getRateOfInterest() = 0;  
+};
+
+class SBI : public Bank {
+public:
+    float getRateOfInterest() override {
+        return 10.0f;  
+    }
+};
+
+class ICICI : public Bank {
+public:
+    float getRateOfInterest() override {
+        return 12.0f; 
+    }
+};
+
+class AXIS : public Bank {
+public:
+    float getRateOfInterest() override {
+        return 9.5f; 
+    }
+};
+
+float calculateSimpleInterest(float principal, float rate, int years) {
+    return (principal * rate * years) / 100;
+}
+
+int main() {
+    float principal;
+    int years;
+    int bank_choice;
+
+    cout << "Enter the principal Amount: ";
+    if (!(cin >> principal) || principal <= 0) {
+        cout << "Invalid principal amount." << endl;
+        return 1;
+    }
+
+    cout << "Enter the No. of years: ";
+    if (!(cin >> years) || years <= 0) {
+        cout << "Invalid number of years." << endl;
+        return 1;
+    }
+
+    cout << "Choose Bank (1 for SBI, 2 for ICICI, 3 for AXIS): ";
+    if (!(cin >> bank_choice) || (bank_choice < 1 || bank_choice > 3)) {
+        cout << "Invalid bank choice." << endl;
+        return 1;
+    }
+
+    Bank* bank;
+    switch (bank_choice) {
+        case 1:
+            bank = new SBI();
+            break;
+        case 2:
+            bank = new ICICI();
+            break;
+        case 3:
+            bank = new AXIS();
+            break;
+    }
+
+    float rate = bank->getRateOfInterest();
+    float simpleInterest = calculateSimpleInterest(principal, rate, years);
+
+    cout << "Simple Interest: " << simpleInterest << endl;
+
+    delete bank;
+    return 0;
+}
